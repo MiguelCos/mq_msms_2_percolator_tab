@@ -10,7 +10,8 @@ library(here)
 
 ## Load msms.txt file ----
 
-msmsfile <- read_tsv(here("msms.txt")) %>% 
+msmsfile <- read_tsv(here("msms.txt"),
+                     na = c("NaN", NA, "")) %>% 
           janitor::clean_names()
 
 # core format for percolator ----
@@ -39,9 +40,13 @@ pinfrommsms <- mutate(
           
           rt = retention_time, 
           
-          dm = mass_error_ppm,
+          dm = ifelse(is.na(mass_error_ppm),
+                    no = mass_error_ppm,
+                    yes = 0),
           
-          deltaM_da = mass_error_da,
+          deltaM_da = ifelse(is.na(mass_error_da),
+                             no = mass_error_da,
+                             yes = 0),
           
           simpleDeltaM_ppm = simple_mass_error_ppm,
           
@@ -142,3 +147,4 @@ pinfrommsms_tab <- left_join(pinfrommsms, charge_var2) %>%
 write_delim(pinfrommsms_tab,
             "mqmsmstxt2percolator.tab",
             delim = "\t")
+
