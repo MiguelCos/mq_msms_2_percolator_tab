@@ -37,9 +37,9 @@ pinfrommsms <- mutate(
           
           m_z = m_z,
           
-          RT = retention_time, 
+          rt = retention_time, 
           
-          deltaM_ppm = mass_error_ppm,
+          dm = mass_error_ppm,
           
           deltaM_da = mass_error_da,
           
@@ -83,8 +83,8 @@ pinfrommsms <- mutate(
                     ExpMass,
                     Mass,
                     m_z,
-                    RT,
-                    deltaM_ppm,
+                    rt,
+                    dm,
                     deltaM_da,
                     simpleDeltaM_ppm,
                     missedCleavages,
