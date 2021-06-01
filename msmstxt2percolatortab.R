@@ -141,10 +141,15 @@ pinfrommsms_tab <- left_join(pinfrommsms, charge_var2) %>%
           )) %>% 
           
           relocate(Peptide, Protein,
-                   .after = last_col())  
+                   .after = last_col()) %>%
+          na.omit()
+
 
 # generate output file ----
+
 write_delim(pinfrommsms_tab,
-            "mqmsmstxt2percolator.tab",
+            "mqmsmstxt2percolator_wonas.tab",
             delim = "\t")
+
+#Note: PSMs with NAs in the 'precursor intensity' columns are excluded. NAs in this column make percolator crash
 
